@@ -100,7 +100,10 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   ElevatedButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>FriendsActionsPage()));
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FriendsActionsPage()));
                                       },
                                       child: Text(
                                         "Действия друезй",
@@ -143,7 +146,10 @@ class HomePage extends StatelessWidget {
                     });
               }
               else {
-                return const LinearProgressIndicator();
+                return const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: LinearProgressIndicator(),
+                );
               }
             }
         ));

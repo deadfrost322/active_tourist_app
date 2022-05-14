@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
                 )),
-            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            navigationBarTheme:  NavigationBarThemeData(
               backgroundColor: Color.fromRGBO(243, 237, 247, 1),
-              selectedItemColor: Colors.black,
+              indicatorColor: Color.fromRGBO(232, 222, 248, 1),
             ),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(

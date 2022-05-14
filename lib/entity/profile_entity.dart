@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:active_tourist_app/entity/place_entity.dart';
 
 class ProfileEntity {

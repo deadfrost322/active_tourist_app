@@ -9,7 +9,7 @@ import 'dart:convert';
 
 class Service {
   String token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxMjk4MjE2LCJqdGkiOiJmYWNmN2U1ZTdkMmQ0MDk0ODE5ZmYzMDJiMWM3MTg0OCIsInVzZXJfaWQiOjF9.YWoZpOdOJbdjaE0xgkKna4XnEIWtT7nubwwyY6wWXyw";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUzNDAwODM0LCJqdGkiOiJkZGRlZjg2NDk1ZGI0NDYyYTgwYTkyN2FiN2RiNTNkMCIsInVzZXJfaWQiOjR9.1f55PaPyCMj9IsMvPG7yBPBrNuywJvQSwErToEEV37k";
   String url = 'http://26.249.56.39:8000/api/';
 
   void login(String username, String password, BuildContext context) async {
@@ -50,7 +50,6 @@ class Service {
     log(response.statusCode.toString());
     if (response.statusCode == 200) {
       List<dynamic> list = json.decode(utf8.decode(response.body.codeUnits));
-      log(list[1].toString());
       List<NewsEntity> news = List.generate(list.length, (i) {
         return NewsEntity.fromJsonShort(list[i]);
       });
@@ -79,7 +78,7 @@ class Service {
     }
   }
 
-  Stream<List<PlaceEntity>> getPlaceList(String search) async* {
+  Future<List<PlaceEntity>> getPlaceList() async {
     String allPlaceUrl = url + "place/all";
     var response = await http.get(
       Uri.parse(allPlaceUrl),
@@ -94,22 +93,9 @@ class Service {
 
       List<PlaceEntity> places = List<PlaceEntity>.generate(
           list.length, (i) => PlaceEntity.fromJsonShort(list[i]));
-      List<PlaceEntity> places2 = [];
-      if (search != "") {
-        for (int i = 0; i < list.length; i++) {
-          if (places[i].name.toLowerCase().contains(search.toLowerCase()) ||
-              (places[i]
-                  .category
-                  .toLowerCase()
-                  .contains(search.toLowerCase()))) {
-            places2.add(places[i]);
-          }
-        }
-        yield places2;
+
+        return places;
       } else {
-        yield places;
-      }
-    } else {
       throw "FAILED TO LOAD PLACES";
     }
   }
@@ -200,7 +186,6 @@ class Service {
               if ((list[i]['id'] == list2[j]['place']) &&
                   (list2[j]['status'] != "Не интересно") &&
                   (list2[j]['status'] != "Нет статуса")) {
-                log(list[i]['id'].toString());
                 result.add(PlaceEntity.fromJsonShort(list[i]));
               }
             }
@@ -210,7 +195,6 @@ class Service {
             for (int i = 0; i < list.length; i++) {
               if (list[i]['id'] == list2[j]['place'] &&
                   list2[j]['status'] == filter) {
-                log(list[i]['id'].toString());
                 result.add(PlaceEntity.fromJsonShort(list[i]));
               }
             }

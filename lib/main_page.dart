@@ -18,9 +18,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: pageIndex,
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: pageIndex,
+        onDestinationSelected: (index) {
           setState(() {
             pageIndex = index;
             pageController.animateToPage(pageIndex,
@@ -28,16 +28,17 @@ class _MainPageState extends State<MainPage> {
                 curve: Curves.fastOutSlowIn);
           });
         },
-        items: const [
-          BottomNavigationBarItem(
+
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.home_outlined),
             label: 'Главная',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.location_on_outlined),
             label: 'Места',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.format_list_bulleted),
             label: 'Списки',
           ),

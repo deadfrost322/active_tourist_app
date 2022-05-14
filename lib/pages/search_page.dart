@@ -15,7 +15,25 @@ class SearchPage extends StatefulWidget {
 class SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
 
-  ValueNotifier<String> search = ValueNotifier<String>("");
+  String search = "";
+  //ValueNotifier<String> search = ValueNotifier<String>("");
+  List<PlaceEntity> placesRow = [];
+  List<PlaceEntity> places = [];
+
+  searchInPlaces(String search, List<PlaceEntity> list) {
+    List<PlaceEntity> places = [];
+    if (search != "") {
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].name.toLowerCase().contains(search.toLowerCase()) ||
+            (list[i].category.toLowerCase().contains(search.toLowerCase()))) {
+          places.add(list[i]);
+        }
+      }
+      return places;
+    } else {
+      return list;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,54 +45,58 @@ class SearchPageState extends State<SearchPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: StreamBuilder<List<PlaceEntity>>(
-            stream: Service().getPlaceList(search.value),
+        child: FutureBuilder<List<PlaceEntity>>(
+            future: Service().getPlaceList(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ValueListenableBuilder<String>(
-                    valueListenable: search,
-                    builder:
-                        (BuildContext context, String value, Widget? child) {
-                      return ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: snapshot.data!.length + 1,
-                        itemBuilder: (context, i) {
-                          if (i == 0) {
-                            return Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: TextFormField(
-                                style: GoogleFonts.manrope(),
-                                controller: searchController,
-                                decoration: InputDecoration(
-                                  suffixIcon: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          search.value = searchController.text;
-                                        });
-                                      },
-                                      child: const Icon(
-                                        Icons.search,
-                                        color: Colors.black45,
-                                      )),
-                                  focusColor: Color(0xFF6200EE),
-                                  hintText: 'Поиск',
-                                  labelText: 'Поиск',
-                                  border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                ),
-                              ),
-                            );
-                          }
-                          return ContentCard(
-                            id: snapshot.data![i - 1].id!.toInt(),
-                            title: snapshot.data![i - 1].name,
-                            category: snapshot.data![i - 1].category,
-                            isNews: false,
-                          );
-                        },
+                placesRow = snapshot.data!.toList();
+                places = placesRow;
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: places.length + 1,
+                  itemBuilder: (context, i) {
+                    if (i == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: TextField(
+                          onChanged: (val) {
+                            setState(() {
+                              places = searchInPlaces(search, placesRow);
+                              search = searchController.text;
+                            });
+                          },
+                          style: GoogleFonts.manrope(),
+                          controller: searchController,
+                          decoration: InputDecoration(
+                            suffixIcon: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    search = "";
+                                    searchController.text = "";
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.clear,
+                                  color: Colors.black45,
+                                )),
+                            focusColor: const Color(0xFF6200EE),
+                            hintText: 'Поиск',
+                            labelText: 'Поиск',
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                          ),
+                        ),
                       );
-                    });
+                    }
+                    return ContentCard(
+                      id: places[i - 1].id!.toInt(),
+                      title: places[i - 1].name,
+                      category: places[i - 1].category,
+                      isNews: false,
+                    );
+                  },
+                );
               } else {
                 return LinearProgressIndicator();
               }
