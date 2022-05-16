@@ -13,22 +13,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         title: 'Active Tourist App',
         theme: ThemeData(
             backgroundColor: Colors.white,
-            useMaterial3: true,
+            useMaterial3: false,
             appBarTheme: AppBarTheme(
-              elevation: 1,
+                elevation: 1,
                 centerTitle: true,
                 iconTheme: const IconThemeData(color: Colors.black),
-                backgroundColor: const Color.fromRGBO(255, 251, 254, 1),
+                backgroundColor: Color.fromRGBO(255, 251, 254, 0.9),
                 titleTextStyle: GoogleFonts.manrope(
                   fontSize: 22,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
                 )),
-            navigationBarTheme:  NavigationBarThemeData(
+            navigationBarTheme: const NavigationBarThemeData(
               backgroundColor: Color.fromRGBO(243, 237, 247, 1),
               indicatorColor: Color.fromRGBO(232, 222, 248, 1),
             ),
@@ -46,4 +46,3 @@ class MyApp extends StatelessWidget {
         home: MainPage());
   }
 }
-

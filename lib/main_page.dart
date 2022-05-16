@@ -28,18 +28,19 @@ class _MainPageState extends State<MainPage> {
                 curve: Curves.fastOutSlowIn);
           });
         },
-
-        destinations: const [
+        destinations:
+        const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
+
+            icon: Icon(Icons.home_outlined, color: Colors.black),
             label: 'Главная',
           ),
           NavigationDestination(
-            icon: Icon(Icons.location_on_outlined),
+            icon: Icon(Icons.location_on_outlined, color: Colors.black),
             label: 'Места',
           ),
           NavigationDestination(
-            icon: Icon(Icons.format_list_bulleted),
+            icon: Icon(Icons.format_list_bulleted, color: Colors.black),
             label: 'Списки',
           ),
         ],

@@ -24,7 +24,7 @@ class ContentCard extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => FullContentPage(id)));
       },
       child: Card(
-        color: const Color.fromRGBO(255, 251, 254, 1),
+        color: const Color.fromRGBO(255, 251, 254, 1.0),
         shape: RoundedRectangleBorder(
             side: const BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),
             borderRadius: BorderRadius.circular(15)),
