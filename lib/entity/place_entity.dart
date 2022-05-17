@@ -52,11 +52,11 @@ class PlaceEntity {
     }
     List<ReviewEntity> reviews;
     list = json["review"];
-    if(list.isNotEmpty){
+    log(list.toString());
+    if(list!=[]){
       reviews = List.generate(list.length, (i) => ReviewEntity.fromJson(list[i]));
       place.reviewList = reviews;
     }
-    log(place.reviewList![0].commentary);
     return place;
   }
 }

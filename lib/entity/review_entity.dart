@@ -1,14 +1,14 @@
 class ReviewEntity {
-  int id;
-  int likeScale;
-  String commentary;
-  String date;
+  int? id;
+  int? likeScale;
+  String? commentary;
+  String? date;
 
   ReviewEntity(
-      {required this.id,
-      required this.likeScale,
-      required this.commentary,
-      required this.date});
+      { this.id,
+       this.likeScale,
+       this.commentary,
+       this.date});
 
   factory ReviewEntity.fromJson(Map<String, dynamic> json){
     return ReviewEntity(

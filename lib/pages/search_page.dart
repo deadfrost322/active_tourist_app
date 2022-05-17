@@ -50,7 +50,7 @@ class SearchPageState extends State<SearchPage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 placesRow = snapshot.data!.toList();
-                places = placesRow;
+                places = searchInPlaces(search, placesRow);
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: places.length + 1,
@@ -61,7 +61,6 @@ class SearchPageState extends State<SearchPage> {
                         child: TextField(
                           onChanged: (val) {
                             setState(() {
-                              places = searchInPlaces(search, placesRow);
                               search = searchController.text;
                             });
                           },

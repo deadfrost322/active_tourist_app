@@ -31,6 +31,7 @@ dependencies:
   google_fonts: any
   carousel_slider: ^4.0.0
   google_maps_flutter: ^2.1.3
+  flutter_rating_bar: any
   flutter:
     sdk: flutter
 
